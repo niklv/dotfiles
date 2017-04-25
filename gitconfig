@@ -1,0 +1,33 @@
+[alias]
+  # Staging
+  a = add
+  aa = add --all
+
+
+  # Diff
+  d = diff
+  dc = diff --cached
+
+  co = checkout
+  ci = commit
+  st = status
+  br = branch
+  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+[user]
+  name = Lvov Nikita
+  email = niklvov@gmail.com
+[core]
+  autocrlf = input
+[push]
+  default = simple
+
+[color]
+  ui = always
+
+[color "branch"]
+  remote = yellow
+
+[color "status"]
+  added = green
+  changed = yellow
+  untracked = red
