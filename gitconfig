@@ -14,7 +14,7 @@
   br = branch
   hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 [user]
-  name = Lvov Nikita
+  name = Nikita Lvov
   email = niklvov@gmail.com
 [core]
   autocrlf = input
@@ -31,3 +31,8 @@
   added = green
   changed = yellow
   untracked = red
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

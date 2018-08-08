@@ -58,6 +58,8 @@ plugins=(aws brew catimg cp colored-man-pages docker git node npm osx pass redis
 
 source $ZSH/oh-my-zsh.sh
 
+export PATH="/usr/local/sbin:$PATH"
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -90,7 +92,7 @@ alias dk="docker"
 alias dkm="docker-machine"
 alias dkc="docker-compose"
 alias brw="brew upgrade"
-alias b2d="eval $(docker-machine env dev)"
 
 # z autocomplete
   . /usr/local/etc/profile.d/z.sh
+
