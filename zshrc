@@ -29,6 +29,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle robbyrussell/oh-my-zsh lib/completion.zsh
 antigen bundle robbyrussell/oh-my-zsh lib/directories.zsh
 antigen bundle robbyrussell/oh-my-zsh lib/history.zsh
+antigen bundle robbyrussell/oh-my-zsh lib/key-bindings.zsh
 antigen bundle robbyrussell/oh-my-zsh lib/termsupport.zsh
 antigen bundle robbyrussell/oh-my-zsh lib/theme-and-appearance.zsh
 
