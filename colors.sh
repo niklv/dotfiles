@@ -6,8 +6,7 @@ mkdir colors
 cd solarized
 mv ./intellij-colors-solarized ../colors/intellij
 mv ./iterm2-colors-solarized ../colors/iterm2
-mv ./osx-terminal.app-colors-solarized ../colors/osx-terminal
-mv ./vim-colors-solarized/colors ../../.vim/colors
+mv ./vim-colors-solarized/colors ../.vim/colors
 cd ..
 # clean-up a bit
 rm -rf solarized
