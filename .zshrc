@@ -7,7 +7,6 @@ fi
 
 EDITOR="vim"
 ZLE_RPROMPT_INDENT=0
-PATH=~/Tools/Shell/jetbrains:$PATH
 
 source ~/Tools/Shell/iterm2_shell_integration.zsh
 source ~/Tools/Shell/powerlevel10k/powerlevel10k.zsh-theme
@@ -68,7 +67,7 @@ if [ -f '/Users/niklv/Tools/Shell/google-cloud-sdk/path.zsh.inc' ]; then . '/Use
 if [ -f '/Users/niklv/Tools/Shell/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/niklv/Tools/Shell/google-cloud-sdk/completion.zsh.inc'; fi
 
 # should be at bottom before zsh-history-substring-search
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Unbind OHMYZSH conflicting keybindings
 # [Ctrl-RightArrow] - unbind
