@@ -11,7 +11,14 @@ ZLE_RPROMPT_INDENT=0
 source ~/Tools/Shell/iterm2_shell_integration.zsh
 source ~/Tools/Shell/powerlevel10k/powerlevel10k.zsh-theme
 
-autoload -Uz compinit && compinit
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  autoload -Uz compinit
+  compinit
+fi
+
 source ~/Tools/Shell/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
 source ~/Tools/Shell/zsh-z/zsh-z.plugin.zsh
 source ~/Tools/Shell/omz-homebrew/omz-homebrew.plugin.zsh
@@ -24,7 +31,6 @@ source ~/Tools/Shell/ohmyzsh/lib/termsupport.zsh
 setopt auto_cd
 setopt multios
 setopt prompt_subst
-FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 
 
 # ALIASES
@@ -53,18 +59,16 @@ alias lx='exa -lbhHigUmuSa@'
 alias lt='exa --tree'
 alias tree='exa --tree'
 
+
+export PATH="$PATH:/Users/niklv/Library/Application Support/JetBrains/Toolbox/scripts"
+
 export NVM_DIR="$HOME/.nvm"
-  [ -s "/usr/local/opt/nvm/nvm.sh" ] && \. "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
-  [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/niklv/Tools/Shell/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/niklv/Tools/Shell/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/niklv/Tools/Shell/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/niklv/Tools/Shell/google-cloud-sdk/completion.zsh.inc'; fi
 
 # should be at bottom before zsh-history-substring-search
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
