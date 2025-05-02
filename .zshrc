@@ -44,6 +44,7 @@ alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 alias k="kubectl"
 alias cc="DATASTORE_TYPE=kubernetes KUBECONFIG=~/.kube/config calicoctl"
 alias tf="terraform"
+alias wolnas="wakeonlan 88:d7:f6:d5:d2:c7 -i 192.168.1.7"
 
 # from omz
 unalias lsa
@@ -51,20 +52,29 @@ unalias l
 unalias ll
 unalias la
 
-alias ls='exa --icons --group-directories-first -F'
-alias l='exa --git-ignore --icons --group-directories-first -F -1'
-alias ll='exa --icons --group-directories-first --git -lbhgaaF'
-alias llm='exa --icons --git -lbhgaaF --sort=modified'
-alias lx='exa -lbhHigUmuSa@'
-alias lt='exa --tree'
-alias tree='exa --tree'
+alias ls='eza --icons --group-directories-first -F'
+alias l='eza --git-ignore --icons --group-directories-first -F -1'
+alias ll='eza --icons --group-directories-first --git -lbhgaaF'
+alias llm='eza --icons --git -lbhgaaF --sort=modified'
+alias lx='eza -lbhHigUmuSa@'
+alias lt='eza --tree'
+alias tree='eza --tree'
 
 
 export PATH="$PATH:/Users/niklv/Library/Application Support/JetBrains/Toolbox/scripts"
+export ANDROID_HOME=/Users/$USER/Library/Android/sdk
+export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+export CAPACITOR_ANDROID_STUDIO_PATH="$HOME/Applications/Android Studio.app/Contents/MacOS/studio"
+
+
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
+
+source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -92,3 +102,12 @@ bindkey -M emacs '^[^[[D' backward-word
 bindkey -M viins '^[^[[D' backward-word
 bindkey -M vicmd '^[^[[D' backward-word
 
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/niklv/Tools/Shell/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/niklv/Tools/Shell/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/niklv/Tools/Shell/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/niklv/Tools/Shell/google-cloud-sdk/completion.zsh.inc'; fi
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/Cellar/tfenv/3.0.0/versions/1.11.3/terraform terraform

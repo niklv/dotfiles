@@ -1,0 +1,6 @@
+hyper - f : osascript -e 'tell application "Firefox" to activate'
+hyper - t : osascript -e 'tell application "Telegram" to activate'
+hyper - w : osascript -e 'tell application "WebStorm" to activate'
+hyper - h : osascript -e 'tell application "Home" to activate'
+hyper - s : osascript -e 'tell application "Slack" to activate'
+hyper - z : osascript -e 'tell application "Zed" to activate'
