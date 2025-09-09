@@ -19,8 +19,9 @@ then
   compinit
 fi
 
+eval "$(zoxide init zsh)"
+
 source ~/Tools/Shell/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
-source ~/Tools/Shell/zsh-z/zsh-z.plugin.zsh
 source ~/Tools/Shell/omz-homebrew/omz-homebrew.plugin.zsh
 source ~/Tools/Shell/ohmyzsh/lib/functions.zsh
 source ~/Tools/Shell/ohmyzsh/lib/completion.zsh
@@ -79,6 +80,8 @@ source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# fzf
+source <(fzf --zsh)
 
 # should be at bottom before zsh-history-substring-search
 source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
