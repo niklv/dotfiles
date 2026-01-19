@@ -114,3 +114,7 @@ if [ -f '/Users/niklv/Tools/Shell/google-cloud-sdk/completion.zsh.inc' ]; then .
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/Cellar/tfenv/3.0.0/versions/1.11.3/terraform terraform
+
+# Added by Antigravity
+export PATH="/Users/niklv/.antigravity/antigravity/bin:$PATH"
+
