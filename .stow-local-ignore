@@ -1,0 +1,7 @@
+.git
+.gitignore
+.vim
+fonts.sh
+install.sh
+osx.sh
+starship.toml

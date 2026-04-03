@@ -5,28 +5,27 @@
 
 ########## Variables
 
-dir=.dotfiles                    # dotfiles directory
-olddir=.dotfiles_old             # old dotfiles backup directory
-files=".gitconfig .iterm2 .vimrc .zshrc .p10k.zsh .skhdrc"    # list of files/folders to symlink in homedir
+dir=~/.dotfiles                  # dotfiles directory
+
+# Mapping: "source:target" (source relative to $dir, target absolute)
+files=(
+    ".gitconfig:$HOME/.gitconfig"
+    ".vimrc:$HOME/.vimrc"
+    ".zshrc:$HOME/.zshrc"
+    ".hushlogin:$HOME/.hushlogin"
+    "config.ghostty:$HOME/.config/ghostty/config.ghostty"
+    "starship.toml:$HOME/.config/starship.toml"
+)
 
 ##########
 
-# create dotfiles_old in homedir
-echo "Creating ~/$olddir for backup of any existing dotfiles in ~"
-mkdir -p ~/$olddir
-echo "...done"
-
-# change to the dotfiles directory
-echo "Changing to the $dir directory"
-cd ~/$dir
-echo "...done"
-
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks
-for file in $files; do
-    echo "Moving any existing dotfiles from ~ to $olddir"
-    mv ~/$file ~/$olddir/
-    echo "Creating symlink to $file in home directory."
-    ln -s ~/$dir/$file ~/$file
+# create symlinks
+for entry in "${files[@]}"; do
+    src="${entry%%:*}"
+    target="${entry#*:}"
+    echo "Linking $src -> $target"
+    mkdir -p "$(dirname "$target")"
+    ln -s "$dir/$src" "$target"
 done
 
 # Create vim dirs

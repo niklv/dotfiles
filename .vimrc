@@ -1,9 +1,3 @@
-" Use the Solarized Dark theme
-set background=dark
-colorscheme solarized
-let g:solarized_termtrans=1
-
-
 " noremap <Up> <Nop>
 " noremap <Down> <Nop>
 " noremap <Left> <Nop>
@@ -73,4 +67,3 @@ filetype plugin indent on
 
 " Get the 2-space YAML as the default when hit carriage return after the colon
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
-

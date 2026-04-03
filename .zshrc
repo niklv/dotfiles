@@ -5,36 +5,121 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-EDITOR="vim"
-ZLE_RPROMPT_INDENT=0
+# Brew
+HOMEBREW_NO_ENV_HINTS=1
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
-source ~/Tools/Shell/iterm2_shell_integration.zsh
-source ~/Tools/Shell/powerlevel10k/powerlevel10k.zsh-theme
+# Path
+export PATH="$HOME/.local/bin:$PATH"
 
-if type brew &>/dev/null
-then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+# Options
+setopt AUTO_CD
+setopt AUTO_PUSHD
+setopt PUSHD_IGNORE_DUPS
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_FIND_NO_DUPS
+setopt HIST_REDUCE_BLANKS
+setopt EXTENDED_HISTORY
+setopt CORRECT
+setopt CORRECT_ALL
+setopt EXTENDED_GLOB
+setopt GLOB_DOTS
+unsetopt NOMATCH
+setopt AUTO_MENU
+unsetopt MENU_COMPLETE
+setopt AUTO_LIST
+setopt COMPLETE_IN_WORD
+setopt ALWAYS_TO_END
+setopt INTERACTIVE_COMMENTS
+setopt PIPE_FAIL
+setopt PROMPT_SUBST
+setopt LONG_LIST_JOBS
+setopt MULTIOS
 
-  autoload -Uz compinit
-  compinit
+# Zinit
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
 fi
 
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+# Plugins
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-history-substring-search
+
+# Completions
+autoload -Uz compinit
+compinit
+
+# Completion config
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-colors ''
+zstyle ':completion:*' verbose yes
+zstyle ':completion:*' special-dirs true
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#) ([0-9a-z-]#)*=01;34=0=01'
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USERNAME -o pid,user,comm -w -w"
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
+zstyle '*' single-ignored show
+
+# Zoxide
 eval "$(zoxide init zsh)"
 
-source ~/Tools/Shell/zsh-better-npm-completion/zsh-better-npm-completion.plugin.zsh
-source ~/Tools/Shell/omz-homebrew/omz-homebrew.plugin.zsh
-source ~/Tools/Shell/ohmyzsh/lib/functions.zsh
-source ~/Tools/Shell/ohmyzsh/lib/completion.zsh
-source ~/Tools/Shell/ohmyzsh/lib/directories.zsh
-source ~/Tools/Shell/ohmyzsh/lib/key-bindings.zsh
-source ~/Tools/Shell/ohmyzsh/lib/misc.zsh
-source ~/Tools/Shell/ohmyzsh/lib/termsupport.zsh
-setopt auto_cd
-setopt multios
-setopt prompt_subst
+# NVM
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && . "/opt/homebrew/opt/nvm/nvm.sh"
 
+# fzf
+source <(fzf --zsh)
 
-# ALIASES
+# Terraform
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/terraform terraform
+
+# Aliases
+alias d='dirs -pv'
+alias -g ...='../..'
+alias -g ....='../../..'
+alias -g .....='../../../..'
+alias -g ......='../../../../..'
+
+alias -- -='cd -'
+alias 1='cd -1'
+alias 2='cd -2'
+alias 3='cd -3'
+alias 4='cd -4'
+alias 5='cd -5'
+alias 6='cd -6'
+alias 7='cd -7'
+alias 8='cd -8'
+alias 9='cd -9'
+
+alias ls='eza --icons --group-directories-first -F'
+alias l='eza --git-ignore --icons --group-directories-first -F -1'
+alias ll='eza --icons --group-directories-first -lbhgaaF'
+alias llm='eza --icons -lbhgaaF --sort=modified'
+alias lx='eza -lbhHigUmuSa@'
+alias lt='eza --tree'
+alias tree='eza --tree'
+
 alias edit="webstorm"
 alias zshconfig="vim ~/.zshrc"
 alias zshreload="source ~/.zshrc"
@@ -43,78 +128,10 @@ alias dkc="docker-compose"
 alias ping="prettyping --nolegend"
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 alias k="kubectl"
-alias cc="DATASTORE_TYPE=kubernetes KUBECONFIG=~/.kube/config calicoctl"
 alias tf="terraform"
 alias wolnas="wakeonlan 88:d7:f6:d5:d2:c7 -i 192.168.1.7"
+alias bug='brew upgrade && brew upgrade --cask && brew cleanup'
 
-# from omz
-unalias lsa
-unalias l
-unalias ll
-unalias la
-
-alias ls='eza --icons --group-directories-first -F'
-alias l='eza --git-ignore --icons --group-directories-first -F -1'
-alias ll='eza --icons --group-directories-first --git -lbhgaaF'
-alias llm='eza --icons --git -lbhgaaF --sort=modified'
-alias lx='eza -lbhHigUmuSa@'
-alias lt='eza --tree'
-alias tree='eza --tree'
-
-
-export PATH="$PATH:/Users/niklv/Library/Application Support/JetBrains/Toolbox/scripts"
-export ANDROID_HOME=/Users/$USER/Library/Android/sdk
-export PATH=${PATH}:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-export CAPACITOR_ANDROID_STUDIO_PATH="$HOME/Applications/Android Studio.app/Contents/MacOS/studio"
-
-
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
-
-source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
-
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+# p10k
+ZLE_RPROMPT_INDENT=0
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# fzf
-source <(fzf --zsh)
-
-# should be at bottom before zsh-history-substring-search
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-# Unbind OHMYZSH conflicting keybindings
-# [Ctrl-RightArrow] - unbind
-bindkey -r -M emacs '^[[1;5C'
-bindkey -r -M viins '^[[1;5C'
-bindkey -r -M vicmd '^[[1;5C'
-# [Ctrl-LeftArrow] - unbind
-bindkey -r -M emacs '^[[1;5D'
-bindkey -r -M viins '^[[1;5D'
-bindkey -r -M vicmd '^[[1;5D'
-
-# [Alt-RightArrow] - move forward one word
-bindkey -M emacs '^[^[[C' forward-word
-bindkey -M viins '^[^[[C' forward-word
-bindkey -M vicmd '^[^[[C' forward-word
-# [Alt-LeftArrow] - move backward one word
-bindkey -M emacs '^[^[[D' backward-word
-bindkey -M viins '^[^[[D' backward-word
-bindkey -M vicmd '^[^[[D' backward-word
-
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/niklv/Tools/Shell/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/niklv/Tools/Shell/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/niklv/Tools/Shell/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/niklv/Tools/Shell/google-cloud-sdk/completion.zsh.inc'; fi
-
-autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /opt/homebrew/Cellar/tfenv/3.0.0/versions/1.11.3/terraform terraform
-
-# Added by Antigravity
-export PATH="/Users/niklv/.antigravity/antigravity/bin:$PATH"
-

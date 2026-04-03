@@ -16,46 +16,6 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 # General UI/UX                                                               #
 ###############################################################################
 
-# Set computer name (as done via System Preferences → Sharing)
-sudo scutil --set ComputerName "mesm"
-sudo scutil --set HostName "mesm"
-sudo scutil --set LocalHostName "mesm"
-sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.smb.server NetBIOSName -string "mesm"
-
-# Set standby delay to 24 hours (default is 1 hour)
-# sudo pmset -a standbydelay 86400
-
-# Disable the sound effects on boot
-sudo nvram SystemAudioVolume=" "
-
-# Disable transparency in the menu bar and elsewhere on Yosemite
-# defaults write com.apple.universalaccess reduceTransparency -bool true
-
-# Menu bar: hide the Time Machine, Volume, and User icons
-# defaults -currentHost write dontAutoLoad -array \
-# 	"/System/Library/CoreServices/Menu Extras/TimeMachine.menu" \
-# 	"/System/Library/CoreServices/Menu Extras/Volume.menu" \
-# 	"/System/Library/CoreServices/Menu Extras/User.menu"
-# defaults write com.apple.systemuiserver menuExtras -array \
-# 	"/System/Library/CoreServices/Menu Extras/Bluetooth.menu" \
-# 	"/System/Library/CoreServices/Menu Extras/AirPort.menu" \
-# 	"/System/Library/CoreServices/Menu Extras/Battery.menu" \
-# 	"/System/Library/CoreServices/Menu Extras/Clock.menu"
-
-# Set highlight color to green
-# defaults write NSGlobalDomain AppleHighlightColor -string "0.764700 0.976500 0.568600"
-
-# Set sidebar icon size to small
-defaults write NSGlobalDomain NSTableViewDefaultSizeMode -int 1
-
-# Always show scrollbars
-# defaults write NSGlobalDomain AppleShowScrollBars -string "Always"
-# Possible values: `WhenScrolling`, `Automatic` and `Always`
-defaults write NSGlobalDomain AppleShowScrollBars -string "WhenScrolling"
-
-# Disable the over-the-top focus ring animation
-defaults write NSGlobalDomain NSUseAnimatedFocusRing -bool false
-
 # Disable smooth scrolling
 # (Uncomment if you’re on an older Mac that messes up the animation)
 #defaults write NSGlobalDomain NSScrollAnimationEnabled -bool false
