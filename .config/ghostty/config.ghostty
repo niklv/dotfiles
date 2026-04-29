@@ -1,3 +1,5 @@
+cursor-style = bar
+
 background = 181c24
 
 background-opacity = 0.7
@@ -6,4 +8,10 @@ background-blur = macos-glass-regular
 notify-on-command-finish-after=1s
 notify-on-command-finish=unfocused
 
+shell-integration-features=ssh-terminfo,ssh-env,sudo
+
 font-family = "MesloLGS NF"
+
+# Shift+Cmd+Arrow for select to start/end of line
+keybind = shift+super+left=text:\x1b[1;2H
+keybind = shift+super+right=text:\x1b[1;2F
